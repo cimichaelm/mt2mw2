@@ -27,12 +27,13 @@ class MWWiki:
         self.debug = True
         self.dbconfig = None
         self.site = None
+        apiurl = "{0}/api.php".format(baseurl)
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
             print(msg)
 
         try:
-            self.site = wt.wiki.Wiki('%s/api.php' % baseurl)
+            self.site = wt.wiki.Wiki(apiurl)
             self.username = username
             self.site.login(username, password=password, remember=True)
             self.dbconfig = dbconfig
