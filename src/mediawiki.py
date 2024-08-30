@@ -28,13 +28,19 @@ class MWWiki:
         self.dbconfig = None
         self.site = None
         apiurl = "{0}/api.php".format(baseurl)
+        self.username = username
+
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
             print(msg)
 
         try:
             self.site = wt.wiki.Wiki(apiurl)
-            self.username = username
+        except Exception as e:
+            msg = "ERROR: mediawiki {0}".format(e)
+            print(msg)
+
+        try:
             self.site.login(username, password=password, remember=True)
             self.dbconfig = dbconfig
             self.dataroot = dataroot
@@ -42,7 +48,7 @@ class MWWiki:
                 print('Database details given: files will be added directly')
                 self.connect_db()
         except Exception as e:
-            msg = "ERROR: mediawiki {0}".format(e)
+            msg = "ERROR: mediawiki login {0}".format(e)
             print(msg)
 
     def connect_db(self):
