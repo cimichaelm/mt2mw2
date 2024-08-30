@@ -28,6 +28,7 @@ class File:
     def __init__(self, title, url):
         self.title = title.capitalize().replace(' ', '_')
         self.url = url
+        self.debug = True
 
     def download_to(self, path):
         self.path = path

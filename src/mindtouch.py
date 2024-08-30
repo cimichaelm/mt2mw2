@@ -26,9 +26,15 @@ from page import HTMLPage, File
 class MTWiki:
     def __init__(self, baseurl):
         self.baseurl = baseurl
+        self.debug = True
 
     def request(self, api_func):
         url = '%s/@api/deki/%s' % (self.baseurl, api_func)
+        
+        if self.debug:
+            msg = "Requesting: {0}".format(url)
+            print(msg)
+        
         response = urllib.request.urlopen(url)
 
         if response.msg != 'OK':

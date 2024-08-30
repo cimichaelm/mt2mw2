@@ -23,6 +23,9 @@ import os
 
 class MWWiki:
     def __init__(self, baseurl, username, password, dbconfig=None, dataroot=None):
+
+        self.debug = True
+
         try:
             self.site = wt.wiki.Wiki('%s/api.php' % baseurl)
             self.username = username
