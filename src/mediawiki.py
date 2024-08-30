@@ -28,7 +28,7 @@ class MWWiki:
         self.dbconfig = None
         self.site = None
         if self.debug:
-            msg = "Opening mediawiki url: {0}".format(baseurl)
+            msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
             print(msg)
 
         try:
