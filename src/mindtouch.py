@@ -16,7 +16,7 @@
 
 
 # system library
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as etree
 from xml.sax.saxutils import unescape
 
@@ -29,7 +29,7 @@ class MTWiki:
 
     def request(self, api_func):
         url = '%s/@api/deki/%s' % (self.baseurl, api_func)
-        response = urllib2.urlopen(url)
+        response = urllib.request.urlopen(url)
 
         if response.msg != 'OK':
             raise Exception('ERROR: Mindtouch api request failed')

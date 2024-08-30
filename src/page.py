@@ -18,7 +18,7 @@
 # system library
 import os
 import subprocess as sp
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import mimetypes
 from datetime import datetime, tzinfo
 import psycopg2 as pg
@@ -34,7 +34,7 @@ class File:
         dir = os.path.dirname(path)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        dl = urllib2.urlopen(self.url)
+        dl = urllib.request.urlopen(self.url)
         f = open(path, 'wb')
         f.write(dl.read())
         f.close()

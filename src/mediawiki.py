@@ -30,15 +30,15 @@ class MWWiki:
             self.dbconfig = dbconfig
             self.dataroot = dataroot
             if self.dbconfig:
-                print 'Database details given: files will be added directly'
+                print('Database details given: files will be added directly')
                 self.connect_db()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     def connect_db(self):
         try:
             self.db = pg.connect(**self.dbconfig)
-        except Exception, e:
+        except Exception as e:
             raise e
 
     @staticmethod
@@ -103,9 +103,9 @@ class MWWiki:
             f = wt.wikifile.File(self.site, file.title)
             try:
                 f.upload(url=file.url)
-                print 'Uploaded file: %s' % f.title
-            except Exception, e:
-                print e
+                print('Uploaded file: %s' % f.title)
+            except Exception as e:
+                print(e)
 
     def write_files_db(self, page):
         cursor = self.db.cursor()
@@ -116,7 +116,7 @@ class MWWiki:
             )
             if not cursor.fetchall():
                 self.commit_file_db(cursor, file)
-                print 'Uploaded file: %s' % file.title
+                print('Uploaded file: %s' % file.title)
         cursor.close()
 
 
@@ -138,16 +138,16 @@ class MWWiki:
                 ),
                 skipmd5=True
             )
-            print 'Wrote page: %s' % p.title
-        except Exception, e:
-            print  e
+            print('Wrote page: %s' % p.title)
+        except Exception as e:
+            print(e)
 
     def update_mainpage(self, root):
         p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
         try:
             p.edit(text=root.title.replace(' ', '_'))
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     def create_from_mindtouch(self, root):
         self.write(root)
