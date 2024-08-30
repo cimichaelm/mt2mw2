@@ -177,7 +177,8 @@ class MWWiki:
             self.create_from_mindtouch(subpage)
 
     def done(self):
-        self.site.logout()
+        if self.site:
+            self.site.logout()
         if self.dbconfig:
             self.db.commit()
             self.db.close()
