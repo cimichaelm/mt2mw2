@@ -160,11 +160,13 @@ class MWWiki:
             print(msg)
 
     def update_mainpage(self, root):
-        p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
-        try:
-            p.edit(text=root.title.replace(' ', '_'))
-        except Exception as e:
-            print(e)
+        if self.site:
+
+            p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
+            try:
+                p.edit(text=root.title.replace(' ', '_'))
+            except Exception as e:
+                print(e)
 
     def create_from_mindtouch(self, root):
         self.write(root)
