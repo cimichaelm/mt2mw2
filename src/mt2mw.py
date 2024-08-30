@@ -25,6 +25,7 @@ if directdb:
         'user': cfg.get('config', 'mediawiki_db_user'),
         'password': cfg.get('config', 'mediawiki_db_password'),
     }
+    print("Will use DB connection")
 
 print("Attempting to create mediawiki connection")
 mwwiki = MWWiki(
