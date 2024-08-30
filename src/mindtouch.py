@@ -107,13 +107,15 @@ class MTWiki:
         return unescape(response.find('body').text.strip())
 
     def set_page_files(self, page):
-        response = etree.fromstring(
-            self.request('pages/%s/files' % page.id)
-        )
-        files = response.findall('file');
-        for file in files:
-            page.add_file(File(
-                file.find('filename').text,
-                file.find('contents').get('href')
-            ))
+        
+        data = self.request('pages/%s/files' % page.id)
+        if data:
+            response = etree.fromstring(data)          
+    
+            files = response.findall('file');
+            for file in files:
+                page.add_file(File(
+                    file.find('filename').text,
+                    file.find('contents').get('href')
+                ))
 
