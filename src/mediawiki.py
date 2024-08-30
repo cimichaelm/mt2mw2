@@ -140,20 +140,24 @@ class MWWiki:
                 self.write_files_db(page)
             else:
                 self.write_files_api(page)
-        # write the page itself
-        p = wt.page.Page(self.site, title=page.path)
-        try:
-            p.edit(
-                text='%s%s%s' % (
-                    page.towiki(),
-                    MWWiki.files_list(page),
-                    MWWiki.subpage_menu(page)
-                ),
-                skipmd5=True
-            )
-            print('Wrote page: %s' % p.title)
-        except Exception as e:
-            print(e)
+        if self.site:
+            # write the page itself
+            p = wt.page.Page(self.site, title=page.path)
+            try:
+                p.edit(
+                    text='%s%s%s' % (
+                        page.towiki(),
+                        MWWiki.files_list(page),
+                        MWWiki.subpage_menu(page)
+                    ),
+                    skipmd5=True
+                )
+                print('Wrote page: %s' % p.title)
+            except Exception as e:
+                print(e)
+        else:
+            msg = "ERROR: cannot write pasge, site is not open".format(self.site)
+            print(msg)
 
     def update_mainpage(self, root):
         p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
@@ -169,6 +173,7 @@ class MWWiki:
 
     def done(self):
         self.site.logout()
-        self.db.commit()
-        self.db.close()
+        if self.dbconfig:
+            self.db.commit()
+            self.db.close()
 
