@@ -22,7 +22,6 @@ from xml.sax.saxutils import unescape
 
 # our library
 from page import HTMLPage, File
-from future.backports.test.pystone import TRUE
 
 class MTWiki:
     def __init__(self, baseurl):
