@@ -16,7 +16,7 @@
 
 
 # system library
-import wikitools as wt
+import wikitools3 as wt
 import psycopg2 as pg
 import hashlib
 import os
