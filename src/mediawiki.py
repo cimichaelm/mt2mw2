@@ -40,16 +40,17 @@ class MWWiki:
             msg = "ERROR: mediawiki {0}".format(e)
             print(msg)
 
-        try:
-            self.site.login(username, password=password, remember=True)
-            self.dbconfig = dbconfig
-            self.dataroot = dataroot
-            if self.dbconfig:
-                print('Database details given: files will be added directly')
-                self.connect_db()
-        except Exception as e:
-            msg = "ERROR: mediawiki login {0}".format(e)
-            print(msg)
+        if self.site:
+            try:
+                self.site.login(username, password=password, remember=True)
+                self.dbconfig = dbconfig
+                self.dataroot = dataroot
+                if self.dbconfig:
+                    print('Database details given: files will be added directly')
+                    self.connect_db()
+            except Exception as e:
+                msg = "ERROR: mediawiki login {0}".format(e)
+                print(msg)
 
     def connect_db(self):
         try:
