@@ -41,7 +41,8 @@ class MWWiki:
                 print('Database details given: files will be added directly')
                 self.connect_db()
         except Exception as e:
-            print(e)
+            msg = "ERROR: mediawiki {0}".format(e)
+            print(msg)
 
     def connect_db(self):
         try:
@@ -107,13 +108,17 @@ class MWWiki:
 
 
     def write_files_api(self, page):
-        for file in page.files:
-            f = wt.wikifile.File(self.site, file.title)
-            try:
-                f.upload(url=file.url)
-                print('Uploaded file: %s' % f.title)
-            except Exception as e:
-                print(e)
+        if self.site:
+            for file in page.files:
+                f = wt.wikifile.File(self.site, file.title)
+                try:
+                    f.upload(url=file.url)
+                    print('Uploaded file: %s' % f.title)
+                except Exception as e:
+                    print(e)
+        else:
+            msg = "ERROR: site is not open".format(site)
+            print(msg)
 
     def write_files_db(self, page):
         cursor = self.db.cursor()
