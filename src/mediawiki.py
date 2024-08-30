@@ -26,6 +26,10 @@ class MWWiki:
 
         self.debug = True
         self.dbconfig = None
+        self.site = None
+        if self.debug:
+            msg = "Opening mediawiki url: {0}".format(baseurl)
+            print(msg)
 
         try:
             self.site = wt.wiki.Wiki('%s/api.php' % baseurl)
