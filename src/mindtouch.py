@@ -22,6 +22,7 @@ from xml.sax.saxutils import unescape
 
 # our library
 from page import HTMLPage, File
+from future.backports.test.pystone import TRUE
 
 class MTWiki:
     def __init__(self, baseurl):
@@ -31,16 +32,30 @@ class MTWiki:
     def request(self, api_func):
         url = '%s/@api/deki/%s' % (self.baseurl, api_func)
         
+        data = None
+        
         if self.debug:
             msg = "Requesting: {0}".format(url)
             print(msg)
         
-        response = urllib.request.urlopen(url)
+        try:
+            response = urllib.request.urlopen(url)
+        except urllib.error.HTTPError as e:
+            print(e.code)
+            print(e.read())
+            success = False
+        except urllib.error.URLError as e:
+            print(e.reason) 
+            success = False
+        else:
+            success = True
 
-        if response.msg != 'OK':
-            raise Exception('ERROR: Mindtouch api request failed')
-
-        return response.read()
+        if success:
+            if response.msg != 'OK':
+                raise Exception('ERROR: Mindtouch api request failed')
+            else:
+                data = response.read()
+        return data
 
     @staticmethod
     def generate_sitemap(root, wiki):
