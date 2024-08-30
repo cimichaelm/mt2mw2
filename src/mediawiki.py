@@ -156,7 +156,7 @@ class MWWiki:
             except Exception as e:
                 print(e)
         else:
-            msg = "ERROR: cannot write pasge, site is not open".format(self.site)
+            msg = "ERROR: cannot write page, site is not open".format(self.site)
             print(msg)
 
     def update_mainpage(self, root):
@@ -167,6 +167,9 @@ class MWWiki:
                 p.edit(text=root.title.replace(' ', '_'))
             except Exception as e:
                 print(e)
+        else:
+            msg = "ERROR: update main page, site is not open".format(self.site)
+            print(msg)
 
     def create_from_mindtouch(self, root):
         self.write(root)
