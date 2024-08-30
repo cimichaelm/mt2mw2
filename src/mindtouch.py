@@ -28,6 +28,28 @@ class MTWiki:
         self.baseurl = baseurl
         self.debug = True
 
+    def login(self, username, password):
+        
+        # create a password manager
+        password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+
+        # Add the username and password.
+        # If we knew the realm, we could use it instead of None.
+
+        password_mgr.add_password(None, self.baseurl, username, password)
+
+        handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
+
+        # create "opener" (OpenerDirector instance)
+        opener = urllib.request.build_opener(handler)
+
+        # use the opener to fetch a URL
+        opener.open(self.baseurl)
+
+        # Install the opener.
+        # Now all calls to urllib.request.urlopen use our opener.
+        urllib.request.install_opener(opener)
+
     def request(self, api_func):
         url = '%s/@api/deki/%s' % (self.baseurl, api_func)
         
@@ -68,10 +90,15 @@ class MTWiki:
         return page
 
     def get_sitemap(self):
-        root = etree.fromstring(self.request('pages')).find('page')
-        self.homepage = self.generate_sitemap(root, self)
-        self.homepage.path = self.homepage.title
-        return self.homepage
+        data = self.request('pages')
+        
+        if data:
+            root = etree.fromstring(data).find('page')
+            self.homepage = self.generate_sitemap(root, self)
+            self.homepage.path = self.homepage.title
+            return self.homepage
+        else:
+            return None
 
     def get_page_content(self, page):
         response = etree.fromstring(
