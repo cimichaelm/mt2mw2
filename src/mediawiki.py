@@ -117,7 +117,7 @@ class MWWiki:
                 except Exception as e:
                     print(e)
         else:
-            msg = "ERROR: site is not open".format(site)
+            msg = "ERROR: site is not open".format(self.site)
             print(msg)
 
     def write_files_db(self, page):
