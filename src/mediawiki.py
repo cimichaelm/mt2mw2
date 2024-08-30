@@ -20,6 +20,7 @@ import wikitools3 as wt
 import psycopg2 as pg
 import hashlib
 import os
+import traceback
 
 class MWWiki:
     def __init__(self, baseurl, username, password, dbconfig=None, dataroot=None):
@@ -39,7 +40,8 @@ class MWWiki:
         except Exception as e:
             msg = "ERROR: mediawiki {0}".format(e)
             print(msg)
-
+            print(traceback.format_exc())
+            
         if self.site:
             try:
                 self.site.login(username, password=password, remember=True)
