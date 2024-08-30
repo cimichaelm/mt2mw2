@@ -25,6 +25,7 @@ class MWWiki:
     def __init__(self, baseurl, username, password, dbconfig=None, dataroot=None):
 
         self.debug = True
+        self.dbconfig = None
 
         try:
             self.site = wt.wiki.Wiki('%s/api.php' % baseurl)
