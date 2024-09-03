@@ -145,6 +145,7 @@ class MWWiki:
                 except Exception as e:
                     msg = "Exception during upload: {0}".format(e)
                     print(msg)
+                    print(traceback.format_exc())
         else:
             msg = "ERROR: site is not open".format(self.site)
             print(msg)
