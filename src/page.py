@@ -98,7 +98,7 @@ def reducechars(m):
 
 def html2wiki(html):
     
-    htmldata = html.decode()
+    htmldata = html.encode()
     cmd = os.path.join(os.getcwd(), 'convert.pl')
     converter = sp.Popen(cmd, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
     out, err = converter.communicate(input=htmldata)
