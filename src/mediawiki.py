@@ -141,7 +141,8 @@ class MWWiki:
                 print(msg)
                 try:
                     f.upload(url=file.url)
-                    print('Uploaded file: %s' % f.title)
+                    msg = "Uploaded file: {0}".format(f.title)
+                    print(msg)
                 except Exception as e:
                     msg = "Exception during upload: {0}".format(e)
                     print(msg)
@@ -159,7 +160,8 @@ class MWWiki:
             )
             if not cursor.fetchall():
                 self.commit_file_db(cursor, file)
-                print('Uploaded file: %s' % file.title)
+                msg = "Uploaded file: {0}".format(file.title)
+                print(msg)
         cursor.close()
 
 
@@ -183,9 +185,12 @@ class MWWiki:
                             ),
                             skipmd5=True
                         )
-                        print('Wrote page: %s' % p.title)
+                        msg = "Wrote page: {0}".format(p.title)
+                        print(msg)
                     except Exception as e:
-                        print(e)
+                        msg = "Exception during write: {0}".format(e)
+                        print(msg)
+                        print(traceback.format_exc())
             else:
                 msg = "ERROR: cannot write page, site is not open".format(self.site)
                 print(msg)
