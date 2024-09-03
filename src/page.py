@@ -97,9 +97,11 @@ def reducechars(m):
     return match[:3] + match[-3:]
 
 def html2wiki(html):
+    
+    htmldata = html.decode()
     cmd = os.path.join(os.getcwd(), 'convert.pl')
     converter = sp.Popen(cmd, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
-    out, err = converter.communicate(input=html)
+    out, err = converter.communicate(input=htmldata)
     if err:
         raise Exception(err)
     return out
