@@ -104,5 +104,11 @@ def html2wiki(html):
     out, err = converter.communicate(input=htmldata)
     if err:
         raise Exception(err)
-    return out
+    
+    if isinstance(out, (bytes, bytearray)):
+        outstr = out.decode()
+    else:
+        outstr = out
+
+    return outstr
 
