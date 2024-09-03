@@ -166,36 +166,38 @@ class MWWiki:
                 self.write_files_db(page)
             else:
                 self.write_files_api(page)
-        if self.site and self.flg_copypages:
-            # write the page itself
-            p = wt.page.Page(self.site, title=page.path)
-            try:
-                p.edit(
-                    text='%s%s%s' % (
-                        page.towiki(),
-                        MWWiki.files_list(page),
-                        MWWiki.subpage_menu(page)
-                    ),
-                    skipmd5=True
-                )
-                print('Wrote page: %s' % p.title)
-            except Exception as e:
-                print(e)
-        else:
-            msg = "ERROR: cannot write page, site is not open".format(self.site)
-            print(msg)
+        if self.flg_copypages:
+            if self.site:
+                    # write the page itself
+                    p = wt.page.Page(self.site, title=page.path)
+                    try:
+                        p.edit(
+                            text='%s%s%s' % (
+                                page.towiki(),
+                                MWWiki.files_list(page),
+                                MWWiki.subpage_menu(page)
+                            ),
+                            skipmd5=True
+                        )
+                        print('Wrote page: %s' % p.title)
+                    except Exception as e:
+                        print(e)
+            else:
+                msg = "ERROR: cannot write page, site is not open".format(self.site)
+                print(msg)
 
     def update_mainpage(self, root):
-        if self.site and self.flg_copypages:
-
-            p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
-            try:
-                p.edit(text=root.title.replace(' ', '_'))
-            except Exception as e:
-                print(e)
-        else:
-            msg = "ERROR: update main page, site is not open".format(self.site)
-            print(msg)
+        if self.flg_copypages:
+            if self.site:
+    
+                p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
+                try:
+                    p.edit(text=root.title.replace(' ', '_'))
+                except Exception as e:
+                    print(e)
+            else:
+                msg = "ERROR: update main page, site is not open".format(self.site)
+                print(msg)
 
     def create_from_mindtouch(self, root):
         self.write(root)
