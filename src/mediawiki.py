@@ -30,6 +30,8 @@ class MWWiki:
         self.site = None
         apiurl = "{0}/api.php".format(baseurl)
         self.username = username
+        self.flg_copyfiles = True
+        self.flg_copypages = True
 
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
@@ -53,6 +55,20 @@ class MWWiki:
             except Exception as e:
                 msg = "ERROR: mediawiki login {0}".format(e)
                 print(msg)
+
+    def set_copypages(self, v):
+        self.flg_copypages = v
+        return self.flg_copypages
+    
+    def get_copypages(self):
+        return self.flg_copypages
+
+    def set_copyfiles(self, v):
+        self.flg_copyfiles = v
+        return self.flg_copyfiles
+    
+    def get_copyfiles(self):
+        return self.flg_copyfiles
 
     def connect_db(self):
         try:
@@ -145,12 +161,12 @@ class MWWiki:
 
     def write(self, page):
         # upload the files for this page
-        if page.files:
+        if page.files and self.flg_copyfiles:
             if self.dbconfig:
                 self.write_files_db(page)
             else:
                 self.write_files_api(page)
-        if self.site:
+        if self.site and self.flg_copypages:
             # write the page itself
             p = wt.page.Page(self.site, title=page.path)
             try:
@@ -170,7 +186,7 @@ class MWWiki:
             print(msg)
 
     def update_mainpage(self, root):
-        if self.site:
+        if self.site and self.flg_copypages:
 
             p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
             try:
