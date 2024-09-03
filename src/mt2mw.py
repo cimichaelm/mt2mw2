@@ -31,6 +31,8 @@ if directdb:
     print("Will use DB connection")
 
 print("Attempting to create mediawiki connection")
+print("Copying files: {0}, Copying pages: {1}".format(flg_copyfiles, flg_copypages))
+
 mwwiki = MWWiki(
     cfg.get('config', 'mediawiki_url'),
     cfg.get('config', 'mediawiki_user'),
