@@ -137,11 +137,14 @@ class MWWiki:
         if self.site:
             for file in page.files:
                 f = wt.wikifile.File(self.site, file.title)
+                msg = "Processing file: {0}".format(f.title)
+                print(msg)
                 try:
                     f.upload(url=file.url)
                     print('Uploaded file: %s' % f.title)
                 except Exception as e:
-                    print(e)
+                    msg = "Exception during upload: {0}".format(e)
+                    print(msg)
         else:
             msg = "ERROR: site is not open".format(self.site)
             print(msg)
