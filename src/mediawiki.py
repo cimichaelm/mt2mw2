@@ -32,6 +32,7 @@ class MWWiki:
         self.username = username
         self.flg_copyfiles = True
         self.flg_copypages = True
+        self.flg_showsubpages = True
 
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
@@ -70,6 +71,14 @@ class MWWiki:
     def get_copyfiles(self):
         return self.flg_copyfiles
 
+    def set_showsubpages(self, v):
+        self.flg_showsubpages = v
+        return self.flg_showsubpages
+    
+    def get_showsubpages(self):
+        return self.flg_showsubpages
+
+
     def connect_db(self):
         try:
             self.db = pg.connect(**self.dbconfig)
@@ -78,12 +87,13 @@ class MWWiki:
 
     @staticmethod
     def subpage_menu(page):
-        if page.subpages:
-            sublist =  '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
-            result = "\n\n===Subpages===\n\n{0}".format(sublist)
-               
-#            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
-            return result
+        if self.flg_showsubpages:
+            if page.subpages:
+                sublist =  '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+                result = "\n\n===Subpages===\n\n{0}".format(sublist)
+                   
+    #            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+                return result
         #.encode('utf-8')
         return ''
 

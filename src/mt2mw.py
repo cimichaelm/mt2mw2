@@ -19,6 +19,7 @@ directdb = cfg.get('config', 'direct_db')
 dbconfig = None
 flg_copyfiles = cfg.getboolean('config', 'copyfiles',fallback=True)
 flg_copypages = cfg.getboolean('config', 'copypages',fallback=True)
+flg_showsubpages = cfg.getboolean('config', 'showsubpages',fallback=True)
 
 if directdb:
     dbconfig = {
@@ -44,6 +45,7 @@ if mwwiki:
     print("MediaWiki Connection created")
     mwwiki.set_copyfiles(flg_copyfiles)
     mwwiki.set_copypages(flg_copypages)
+    mwwiki.set_showsubpages(flg_showsubpages)
 
 print("Creating MediaWiki from mindtouch site...")
 mwwiki.create_from_mindtouch(homepage)
