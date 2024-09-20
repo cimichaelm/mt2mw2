@@ -79,15 +79,21 @@ class MWWiki:
     @staticmethod
     def subpage_menu(page):
         if page.subpages:
-            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
-            return result.encode('utf-8')
+            sublist =  '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+            result = "\n\n===Subpages===\n\n{0}".format(sublist)
+               
+#            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+            return result
+        #.encode('utf-8')
         return ''
 
     @staticmethod
     def files_list(page):
         if page.files:
-            result = '\n\n===Files===\n\n%s' % '\n'.join(list('*[[File:%s]]' % (f.title) for f in page.files))
-            return result.encode('utf-8')
+            sublist = '\n'.join(list('*[[File:%s]]' % (f.title) for f in page.files))
+            result = "'\n\n===Files===\n\n{0}".format(sublist)
+            return result
+        #.encode('utf-8')
         return ''
 
     def commit_file_db(self, cursor, file):
