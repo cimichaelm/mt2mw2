@@ -1,3 +1,6 @@
+#
+# File: mt2mw.py
+#
 # mt2mw -- package for migrating a Mindtouch wiki to MediaWiki
 # Copyright (C) 2010 Catalyst IT Ltd 
 
