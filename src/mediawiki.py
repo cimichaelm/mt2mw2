@@ -85,15 +85,29 @@ class MWWiki:
         except Exception as e:
             raise e
 
+    def get_subpage_menu(self, page):
+        """
+        """
+        
+        if self.flg_showsubpages:
+            return MWWiki.subpage_menu(page)
+        else:
+            return ''
+
+    def get_files_list(self, page):
+        """
+        """
+        
+        return MWWiki.files_list(page)
+
     @staticmethod
     def subpage_menu(page):
-        if self.flg_showsubpages:
-            if page.subpages:
-                sublist =  '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
-                result = "\n\n===Subpages===\n\n{0}".format(sublist)
-                   
-    #            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
-                return result
+        if page.subpages:
+            sublist =  '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+            result = "\n\n===Subpages===\n\n{0}".format(sublist)
+               
+#            result = '\n\n===Subpages===\n\n%s' % '\n'.join(list('* [[%s|%s]]' % (s.path, s.title) for s in page.subpages))
+            return result
         #.encode('utf-8')
         return ''
 
@@ -196,8 +210,8 @@ class MWWiki:
                         p.edit(
                             text='%s%s%s' % (
                                 page.towiki(),
-                                MWWiki.files_list(page),
-                                MWWiki.subpage_menu(page)
+                                self.get_files_list(page),
+                                self.get_subpage_menu(page)
                             ),
                             skipmd5=True
                         )
