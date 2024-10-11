@@ -21,6 +21,7 @@ class mt2mwapp(object):
 
     def __init__(self, **kwargs):
         """
+        Constructor
         """
 
         super(mt2mwapp, self).__init__(**kwargs)
@@ -30,6 +31,7 @@ class mt2mwapp(object):
     
     def configure(self):
         """
+        load configuration file
         """
 
         # read configuration file
@@ -40,6 +42,8 @@ class mt2mwapp(object):
         
     def migratewiki(self):
         """
+        Migrate mindtouch wiki to mediawiki
+        
         """
         
         cfg = self.cfg
@@ -95,9 +99,13 @@ class mt2mwapp(object):
 
     def main_cli(self, argv):
         """
+        Command line interface
+        Main entry point
         """
 
+        # load configuration
         self.configure()
+        # run the migration process
         self.migratewiki()
         
 
