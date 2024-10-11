@@ -21,6 +21,7 @@ import psycopg2 as pg
 import hashlib
 import os
 import traceback
+import time
 
 class MWWiki:
     def __init__(self, baseurl, username, password, dbconfig=None, dataroot=None):
@@ -33,6 +34,7 @@ class MWWiki:
         self.flg_copyfiles = True
         self.flg_copypages = True
         self.flg_showsubpages = True
+        self.upload_delay = 1
 
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
@@ -84,6 +86,14 @@ class MWWiki:
             self.db = pg.connect(**self.dbconfig)
         except Exception as e:
             raise e
+
+    def wait_upload_delay(self):
+        """
+        sleep for upload_delay seconds
+        """
+
+        if self.upload_delay > 0:
+            time.sleep(self.upload_delay)
 
     def get_subpage_menu(self, page):
         """
@@ -169,6 +179,7 @@ class MWWiki:
                 f = wt.wikifile.File(self.site, file.title)
                 msg = "Processing file: {0}".format(f.title)
                 print(msg)
+                self.wait_upload_delay()
                 try:
                     f.upload(url=file.url)
                     msg = "Uploaded file: {0}".format(f.title)
