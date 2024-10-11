@@ -25,6 +25,7 @@ class mt2mwapp(object):
 
         super(mt2mwapp, self).__init__(**kwargs)
 
+        self.configfile = 'config.ini'
         self.cfg = None
     
     def configure(self):
@@ -34,7 +35,7 @@ class mt2mwapp(object):
         # read configuration file
 
         cfg = cp.SafeConfigParser()
-        cfg.read('config.ini')
+        cfg.read(self.configfile)
         self.cfg = cfg
         
     def migratewiki(self):
