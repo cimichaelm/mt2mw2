@@ -130,12 +130,17 @@ class MWWiki:
         # Replace invalid characters with "_"
         sanitized_title = re.sub(invalid_chars, '_', title)
         
-        # Replace multiple consecutive underscores with a single underscore
-        sanitized_title = re.sub(r'_+', '_', sanitized_title)
+        if False:
+            # Replace multiple consecutive underscores with a single underscore
+            sanitized_title = re.sub(r'_+', '_', sanitized_title)
+            
+            # Trim leading and trailing underscores
+            sanitized_title = sanitized_title.strip('_')
+
+            
         
-        # Trim leading and trailing underscores
-        sanitized_title = sanitized_title.strip('_')
         
+                
         return sanitized_title        
         
 
@@ -248,7 +253,12 @@ class MWWiki:
             if self.site:
                     # write the page itself
                     try:
-                        sanitized_title = self.sanitize_title(page.title)
+                        title = page.title
+                        sanitized_title = self.sanitize_title(title)
+                                # check if sanitized title is the same as the original title
+                        if santitized_title <> title:
+                            print("Warning: sanitized title '{0}' is different from original title '{1}'".format(sanitized_title, title))
+
                         p = wt.page.Page(self.site, title=sanitized_title)
                     except Exception as e:
                         msg = "Exception creating page: {0}".format(e)
