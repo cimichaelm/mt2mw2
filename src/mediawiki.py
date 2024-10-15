@@ -256,7 +256,7 @@ class MWWiki:
                         title = page.title
                         sanitized_title = self.sanitize_title(title)
                                 # check if sanitized title is the same as the original title
-                        if santitized_title != title:
+                        if sanitized_title != title:
                             print("Warning: sanitized title '{0}' is different from original title '{1}'".format(sanitized_title, title))
 
                         p = wt.page.Page(self.site, title=sanitized_title)
