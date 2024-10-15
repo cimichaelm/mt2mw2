@@ -39,6 +39,9 @@ class MWWiki:
         self.flg_copypages = True
         self.flg_showsubpages = True
         self.upload_delay = 1
+        # MediaWiki:Mainpage holds the value of the main page in mediawiki
+        # it should be set to match the following parameter
+        self.main_page = 'mainpage'
 
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
@@ -276,7 +279,7 @@ class MWWiki:
         if self.flg_copypages:
             if self.site:
     
-                p = wt.page.Page(self.site, title='MediaWiki:Mainpage')
+                p = wt.page.Page(self.site, title=self.main_page)
                 try:
                     p.edit(text=root.title.replace(' ', '_'))
                 except Exception as e:
