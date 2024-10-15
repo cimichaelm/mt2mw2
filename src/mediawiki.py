@@ -25,6 +25,7 @@ import hashlib
 import os
 import traceback
 import time
+import re
 
 class MWWiki:
     def __init__(self, baseurl, username, password, dbconfig=None, dataroot=None):
@@ -112,6 +113,28 @@ class MWWiki:
         """
         
         return MWWiki.files_list(page)
+    
+    def sanitize_title(self, title):
+        """
+        Sanitize characters in page title by replacing invalid characters with "_"
+        """
+        # Define a regex pattern for invalid characters in MediaWiki page titles
+        invalid_chars = r'[#<>[\]|{}\n\r]'
+        
+        # trim leading and trailing whitespace
+        trimed_title = title.strip()
+        
+        # Replace invalid characters with "_"
+        sanitized_title = re.sub(invalid_chars, '_', title)
+        
+        # Replace multiple consecutive underscores with a single underscore
+        sanitized_title = re.sub(r'_+', '_', sanitized_title)
+        
+        # Trim leading and trailing underscores
+        sanitized_title = sanitized_title.strip('_')
+        
+        return sanitized_title        
+        
 
     @staticmethod
     def subpage_menu(page):
@@ -216,25 +239,35 @@ class MWWiki:
                 self.write_files_db(page)
             else:
                 self.write_files_api(page)
+                
+        flg_error = False
         if self.flg_copypages:
             if self.site:
                     # write the page itself
-                    p = wt.page.Page(self.site, title=page.path)
                     try:
-                        p.edit(
-                            text='%s%s%s' % (
-                                page.towiki(),
-                                self.get_files_list(page),
-                                self.get_subpage_menu(page)
-                            ),
-                            skipmd5=True
-                        )
-                        msg = "Wrote page: {0}".format(p.title)
-                        print(msg)
+                        sanitized_title = self.sanitize_title(page.title)
+                        p = wt.page.Page(self.site, title=sanitized_title)
                     except Exception as e:
-                        msg = "Exception during write: {0}".format(e)
+                        msg = "Exception creating page: {0}".format(e)
                         print(msg)
                         print(traceback.format_exc())
+                        flg_error = True
+                    if not flg_error:
+                        try:
+                            p.edit(
+                                text='%s%s%s' % (
+                                    page.towiki(),
+                                    self.get_files_list(page),
+                                    self.get_subpage_menu(page)
+                                ),
+                                skipmd5=True
+                            )
+                            msg = "Wrote page: {0}".format(p.title)
+                            print(msg)
+                        except Exception as e:
+                            msg = "Exception during write: {0}".format(e)
+                            print(msg)
+                            print(traceback.format_exc())
             else:
                 msg = "ERROR: cannot write page, site is not open".format(self.site)
                 print(msg)
