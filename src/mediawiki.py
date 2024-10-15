@@ -40,8 +40,8 @@ class MWWiki:
         self.flg_showsubpages = True
         self.upload_delay = 1
         # MediaWiki:Mainpage holds the value of the main page in mediawiki
-        # it should be set to match the following parameter
-        self.main_page = 'mainpage'
+        # it will be updated with the name of the main page
+        self.main_page = 'MediaWiki:Mainpage'
 
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
