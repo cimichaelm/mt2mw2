@@ -139,8 +139,10 @@ class MWWiki:
 
             
         
-        
-                
+        if title != sanitized_title:
+            msg = "SANITIZED TITLE: {0}".format(sanitized_title)
+            print(msg)
+   
         return sanitized_title        
         
 
