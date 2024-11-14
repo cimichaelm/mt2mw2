@@ -321,7 +321,7 @@ class MWWiki:
 
     def create_from_mindtouch(self, root):
         if self.debug:
-            msg = "Creating from mindtouch: {0}".format(self.tostring(root.title))
+            msg = "Creating from mindtouch: {0}".format(root.title)
             self.log_msg(msg)
             msg = "page object: {0}".format(root)
             self.log_msg(msg)
