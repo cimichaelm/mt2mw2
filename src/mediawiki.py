@@ -35,9 +35,13 @@ class MWWiki:
         self.site = None
         apiurl = "{0}/api.php".format(baseurl)
         self.username = username
+        # true to copy the files/attachements
         self.flg_copyfiles = True
+        # true to copy the pages
         self.flg_copypages = True
+        # true to show the subpages list on each page
         self.flg_showsubpages = True
+        # set tp true to create pages with hierarchy, false to flatten
         self.flg_hierarchy = True
         
         self.upload_delay = 1
