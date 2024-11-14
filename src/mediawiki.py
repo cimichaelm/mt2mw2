@@ -213,12 +213,13 @@ class MWWiki:
         if self.site:
             for file in page.files:
                 f = wt.wikifile.File(self.site, file.title)
-                msg = "Processing file: {0}".format(f.title)
+                title = str(f.title)
+                msg = "Processing file: {0}".format(title)
                 print(msg)
                 self.wait_upload_delay()
                 try:
                     f.upload(url=file.url)
-                    msg = "Uploaded file: {0}".format(f.title)
+                    msg = "Uploaded file: {0}".format(title)
                     print(msg)
                 except Exception as e:
                     msg = "Exception during upload: {0}".format(e)
