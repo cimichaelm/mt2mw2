@@ -87,12 +87,15 @@ class MWWiki:
     def get_showsubpages(self):
         return self.flg_showsubpages
 
-    def tostring(self, bytes):
+    def tostring(self, text):
         """
         Convert bytes to string
         """
-        
-        return bytes.decode("utf-8")
+        # check if bytes is type bytes
+        if isinstance(text, bytes):
+            return text.decode('utf-8')
+
+        return str(text)
 
     def log_msg(self, msg):
         """
