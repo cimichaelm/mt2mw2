@@ -42,7 +42,9 @@ class MWWiki:
         # MediaWiki:Mainpage holds the value of the main page in mediawiki
         # it will be updated with the name of the main page
         self.main_page = 'MediaWiki:Mainpage'
-
+        self.pagecount = 0
+        self.filecount = 0
+        
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
             print(msg)
@@ -264,12 +266,14 @@ class MWWiki:
     def write(self, page):
         # upload the files for this page
         if page.files and self.flg_copyfiles:
+            self.filecount += 1
             if self.dbconfig:
                 self.write_files_db(page)
             else:
                 self.write_files_api(page)
                 
         flg_error = False
+        self.pagecount += 1
         if self.flg_copypages:
             if self.site:
                     # write the page itself
@@ -337,3 +341,7 @@ class MWWiki:
             self.db.commit()
             self.db.close()
 
+        msg = "Page count: {0}".format(self.pagecount)
+        self.log_msg(msg)
+        msg = "File count: {0}".format(self.filecount)
+        self.log_msg(msg)
