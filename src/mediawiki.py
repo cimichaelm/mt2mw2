@@ -327,6 +327,8 @@ class MWWiki:
         if self.debug:
             msg = "Creating from mindtouch: {0}".format(root.title)
             self.log_msg(msg)
+            msg = "Path: {0}".format(root.path)
+            self.log_msg(msg)
             msg = "page object: {0}".format(root)
             self.log_msg(msg)
 
