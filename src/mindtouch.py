@@ -107,7 +107,11 @@ class MTWiki:
         response = etree.fromstring(
             self.request('pages/%s/contents' % page.id)
         )
-        return unescape(response.find('body').text.strip())
+        text = response.find('body').text
+        if text:
+            return unescape(text.strip())
+        else:
+            return ""
 
     def set_page_files(self, page):
         
