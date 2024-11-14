@@ -286,7 +286,12 @@ class MWWiki:
                         if sanitized_title != title:
                             print("Warning: sanitized title '{0}' is different from original title '{1}'".format(sanitized_title, title))
 
-                        p = wt.page.Page(self.site, title=sanitized_title)
+                        if self.flg_hierarchy:
+                            pagepath = page.path
+                        else:
+                            pagepath = sanitized_title
+
+                        p = wt.page.Page(self.site, title=pagepath)
                     except Exception as e:
                         msg = "Exception creating page: {0}".format(e)
                         print(msg)
