@@ -87,6 +87,12 @@ class MWWiki:
     def get_showsubpages(self):
         return self.flg_showsubpages
 
+    def tostring(self, bytes):
+        """
+        Convert bytes to string
+        """
+        
+        return bytes.decode("utf-8")
 
     def connect_db(self):
         try:
@@ -213,7 +219,7 @@ class MWWiki:
         if self.site:
             for file in page.files:
                 f = wt.wikifile.File(self.site, file.title)
-                title = str(f.title)
+                title = self.tostring(f.title)
                 msg = "Processing file: {0}".format(title)
                 print(msg)
                 self.wait_upload_delay()
@@ -232,13 +238,14 @@ class MWWiki:
     def write_files_db(self, page):
         cursor = self.db.cursor()
         for file in page.files:
+            title = self.tostring(file.title)
             cursor.execute('''
                 SELECT img_name FROM mediawiki.image WHERE img_name = %s''',
                 (file.title,)
             )
             if not cursor.fetchall():
                 self.commit_file_db(cursor, file)
-                msg = "Uploaded file: {0}".format(file.title)
+                msg = "Uploaded file: {0}".format(title)
                 print(msg)
         cursor.close()
 
