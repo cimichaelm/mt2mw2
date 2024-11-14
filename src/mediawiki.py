@@ -38,13 +38,15 @@ class MWWiki:
         self.flg_copyfiles = True
         self.flg_copypages = True
         self.flg_showsubpages = True
+        self.flg_hierarchy = True
+        
         self.upload_delay = 1
         # MediaWiki:Mainpage holds the value of the main page in mediawiki
         # it will be updated with the name of the main page
         self.main_page = 'MediaWiki:Mainpage'
         self.pagecount = 0
         self.filecount = 0
-        
+
         if self.debug:
             msg = "Opening mediawiki url: {0}, {1}".format(baseurl,username)
             print(msg)
