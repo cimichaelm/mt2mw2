@@ -94,6 +94,14 @@ class MWWiki:
         
         return bytes.decode("utf-8")
 
+    def log_msg(self, msg):
+        """
+        log message
+        """
+        
+        if self.debug:
+            print(msg)
+
     def connect_db(self):
         try:
             self.db = pg.connect(**self.dbconfig)
@@ -309,6 +317,12 @@ class MWWiki:
                 print(msg)
 
     def create_from_mindtouch(self, root):
+        if self.debug:
+            msg = "Creating from mindtouch: {0}".format(self.tostring(root.title))
+            self.log_msg(msg)
+            msg = "page object: {0}".format(root)
+            self.log_msg(msg)
+
         self.write(root)
         for subpage in root.subpages:
             self.create_from_mindtouch(subpage)
