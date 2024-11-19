@@ -340,8 +340,8 @@ class MWWiki:
             self.log_msg(msg)
             msg = "Path: {0}".format(root.path)
             self.log_msg(msg)
-            msg = "page object: {0}".format(root)
-            self.log_msg(msg)
+            #msg = "page object: {0}".format(root)
+            #self.log_msg(msg)
 
         self.write(root)
         for subpage in root.subpages:
