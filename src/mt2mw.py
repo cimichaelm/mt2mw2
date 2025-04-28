@@ -50,7 +50,11 @@ class mt2mwapp(object):
         
         # get the root element in the page structure
         print("Attempting to get the mindtouch wiki layout")
+        mtuser = cfg.get('config', 'mindtouch_user')
+        mtpassword = cfg.get('config', 'mindtouch_password')
         mtwiki = MTWiki(cfg.get('config', 'mindtouch_url'))
+        if mtuser:
+            mtwiki.login(mtuser, mtpassword)
         homepage = mtwiki.get_sitemap()
         if homepage:
             print("Have mindtouch layout.")

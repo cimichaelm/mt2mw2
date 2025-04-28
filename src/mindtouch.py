@@ -25,12 +25,16 @@ from xml.sax.saxutils import unescape
 
 # our library
 from page import HTMLPage, File
+from ansible.plugins.lookup import password
 
 class MTWiki:
-    def __init__(self, baseurl):
+    def __init__(self, baseurl, username=None, password=None):
         self.baseurl = baseurl
         self.debug = True
 
+        self.username = username
+        self.password = password
+        
     def login(self, username, password):
         
         # create a password manager
