@@ -28,7 +28,8 @@ class mt2mwapp(object):
 
         self.configfile = 'config.ini'
         self.cfg = None
-    
+        self.flg_mtlogin = True
+        
     def configure(self):
         """
         load configuration file
@@ -53,7 +54,7 @@ class mt2mwapp(object):
         mtuser = cfg.get('config', 'mindtouch_user')
         mtpassword = cfg.get('config', 'mindtouch_password')
         mtwiki = MTWiki(cfg.get('config', 'mindtouch_url'))
-        if mtuser:
+        if mtuser and self.flg_mtlogin:
             mtwiki.login(mtuser, mtpassword)
         homepage = mtwiki.get_sitemap()
         if homepage:
